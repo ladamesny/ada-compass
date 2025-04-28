@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { useTheme, useWallet } from '@/app/client-components';
 import { Button } from '@/app/components/ui/Button';
 import { WalletSelector } from '@/app/components/layout/WalletSelector';
+import { MarketPrices } from '@/app/components/layout/MarketPrices';
 
 // Navigation items
 const navItems = [
@@ -73,6 +74,9 @@ export function Header() {
           ))}
         </nav>
       </div>
+
+      {/* Market Prices Section */}
+      <MarketPrices />
     </header>
   );
 } 

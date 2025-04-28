@@ -9,7 +9,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export function PortfolioSummary() {
-  const { portfolioData, cryptoPrices, totalBalanceADA, totalBalanceUSD, isLoading } = usePortfolio();
+  const { portfolioData, totalBalanceADA, totalBalanceUSD, isLoading } = usePortfolio();
 
   // Use API total values if available, otherwise use calculated ones
   const displayTotalADA = portfolioData?.total_ada_value || totalBalanceADA;
@@ -68,66 +68,33 @@ export function PortfolioSummary() {
     <Card>
       <CardContent>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Crypto Prices */}
+          {/* Total Balance */}
           <div className="order-2 md:order-1">
-            <h3 className="text-lg font-semibold mb-4">Market Prices</h3>
-            
-            <div className="flex flex-col space-y-4">
-              {/* BTC Price */}
-              <div className="flex justify-between items-center p-3 bg-gray-100 dark:bg-gray-800 rounded-lg">
-                <div className="flex items-center">
-                  <div className="bg-orange-500 p-2 rounded-full mr-3">
-                    <span className="text-white font-bold">₿</span>
-                  </div>
-                  <span className="font-medium">Bitcoin</span>
-                </div>
-                <div className="text-lg font-bold">
-                  ${cryptoPrices?.bitcoin?.usd.toLocaleString() || '0'}
-                </div>
+            <h3 className="text-lg font-semibold mb-4">Total Balance</h3>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+                <div className="text-sm text-gray-500 dark:text-gray-400">ADA</div>
+                <div className="text-lg font-bold mt-1">₳{displayTotalADA.toLocaleString(undefined, { maximumFractionDigits: 2 })}</div>
               </div>
-              
-              {/* ADA Price */}
-              <div className="flex justify-between items-center p-3 bg-gray-100 dark:bg-gray-800 rounded-lg">
-                <div className="flex items-center">
-                  <div className="bg-cardano-blue p-2 rounded-full mr-3">
-                    <span className="text-white font-bold">₳</span>
-                  </div>
-                  <span className="font-medium">Cardano</span>
-                </div>
-                <div className="text-lg font-bold">
-                  ${cryptoPrices?.cardano?.usd.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 4 }) || '0'}
-                </div>
+              <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
+                <div className="text-sm text-gray-500 dark:text-gray-400">USD</div>
+                <div className="text-lg font-bold mt-1">${totalBalanceUSD.toLocaleString(undefined, { maximumFractionDigits: 2 })}</div>
               </div>
             </div>
             
-            {/* Total Balance */}
-            <div className="mt-6">
-              <h3 className="text-lg font-semibold mb-4">Total Balance</h3>
-              <div className="grid grid-cols-2 gap-4">
-                <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
-                  <div className="text-sm text-gray-500 dark:text-gray-400">ADA</div>
-                  <div className="text-lg font-bold mt-1">₳{displayTotalADA.toLocaleString(undefined, { maximumFractionDigits: 2 })}</div>
-                </div>
-                <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
-                  <div className="text-sm text-gray-500 dark:text-gray-400">USD</div>
-                  <div className="text-lg font-bold mt-1">${totalBalanceUSD.toLocaleString(undefined, { maximumFractionDigits: 2 })}</div>
-                </div>
+            {/* Token Type Breakdown */}
+            <div className="mt-4 grid grid-cols-3 gap-2 text-center">
+              <div className="p-2 rounded bg-blue-100 dark:bg-blue-900">
+                <div className="text-xs text-blue-700 dark:text-blue-300">Fungible</div>
+                <div className="font-medium">₳{fungibleTotal.toLocaleString(undefined, { maximumFractionDigits: 1 })}</div>
               </div>
-              
-              {/* Token Type Breakdown */}
-              <div className="mt-4 grid grid-cols-3 gap-2 text-center">
-                <div className="p-2 rounded bg-blue-100 dark:bg-blue-900">
-                  <div className="text-xs text-blue-700 dark:text-blue-300">Fungible</div>
-                  <div className="font-medium">₳{fungibleTotal.toLocaleString(undefined, { maximumFractionDigits: 1 })}</div>
-                </div>
-                <div className="p-2 rounded bg-pink-100 dark:bg-pink-900">
-                  <div className="text-xs text-pink-700 dark:text-pink-300">NFTs</div>
-                  <div className="font-medium">₳{nftTotal.toLocaleString(undefined, { maximumFractionDigits: 1 })}</div>
-                </div>
-                <div className="p-2 rounded bg-teal-100 dark:bg-teal-900">
-                  <div className="text-xs text-teal-700 dark:text-teal-300">LP</div>
-                  <div className="font-medium">₳{lpTotal.toLocaleString(undefined, { maximumFractionDigits: 1 })}</div>
-                </div>
+              <div className="p-2 rounded bg-pink-100 dark:bg-pink-900">
+                <div className="text-xs text-pink-700 dark:text-pink-300">NFTs</div>
+                <div className="font-medium">₳{nftTotal.toLocaleString(undefined, { maximumFractionDigits: 1 })}</div>
+              </div>
+              <div className="p-2 rounded bg-teal-100 dark:bg-teal-900">
+                <div className="text-xs text-teal-700 dark:text-teal-300">LP</div>
+                <div className="font-medium">₳{lpTotal.toLocaleString(undefined, { maximumFractionDigits: 1 })}</div>
               </div>
             </div>
           </div>
