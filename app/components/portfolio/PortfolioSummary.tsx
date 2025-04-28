@@ -4,12 +4,15 @@ import { usePortfolio } from '@/app/hooks/usePortfolio';
 import { Card, CardContent } from '@/app/components/ui/Card';
 import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { usePrivacy } from '@/app/contexts/PrivacyContext';
+import { PrivacyToggle } from '@/app/components/ui/PrivacyToggle';
 
 // Register Chart.js components
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export function PortfolioSummary() {
   const { portfolioData, totalBalanceADA, totalBalanceUSD, isLoading } = usePortfolio();
+  const { isPrivate } = usePrivacy();
 
   // Use API total values if available, otherwise use calculated ones
   const displayTotalADA = portfolioData?.total_ada_value || totalBalanceADA;
@@ -67,6 +70,9 @@ export function PortfolioSummary() {
   return (
     <Card>
       <CardContent>
+        <div className="flex justify-end mb-4">
+          <PrivacyToggle />
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Total Balance */}
           <div className="order-2 md:order-1">
@@ -74,11 +80,15 @@ export function PortfolioSummary() {
             <div className="grid grid-cols-2 gap-4">
               <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
                 <div className="text-sm text-gray-500 dark:text-gray-400">ADA</div>
-                <div className="text-lg font-bold mt-1">₳{displayTotalADA.toLocaleString(undefined, { maximumFractionDigits: 2 })}</div>
+                <div className="text-lg font-bold mt-1">
+                  {isPrivate ? '••••••' : `₳${displayTotalADA.toLocaleString(undefined, { maximumFractionDigits: 2 })}`}
+                </div>
               </div>
               <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
                 <div className="text-sm text-gray-500 dark:text-gray-400">USD</div>
-                <div className="text-lg font-bold mt-1">${totalBalanceUSD.toLocaleString(undefined, { maximumFractionDigits: 2 })}</div>
+                <div className="text-lg font-bold mt-1">
+                  {isPrivate ? '••••••' : `$${totalBalanceUSD.toLocaleString(undefined, { maximumFractionDigits: 2 })}`}
+                </div>
               </div>
             </div>
             
@@ -86,15 +96,21 @@ export function PortfolioSummary() {
             <div className="mt-4 grid grid-cols-3 gap-2 text-center">
               <div className="p-2 rounded bg-blue-100 dark:bg-blue-900">
                 <div className="text-xs text-blue-700 dark:text-blue-300">Fungible</div>
-                <div className="font-medium">₳{fungibleTotal.toLocaleString(undefined, { maximumFractionDigits: 1 })}</div>
+                <div className="font-medium">
+                  {isPrivate ? '••••••' : `₳${fungibleTotal.toLocaleString(undefined, { maximumFractionDigits: 1 })}`}
+                </div>
               </div>
               <div className="p-2 rounded bg-pink-100 dark:bg-pink-900">
                 <div className="text-xs text-pink-700 dark:text-pink-300">NFTs</div>
-                <div className="font-medium">₳{nftTotal.toLocaleString(undefined, { maximumFractionDigits: 1 })}</div>
+                <div className="font-medium">
+                  {isPrivate ? '••••••' : `₳${nftTotal.toLocaleString(undefined, { maximumFractionDigits: 1 })}`}
+                </div>
               </div>
               <div className="p-2 rounded bg-teal-100 dark:bg-teal-900">
                 <div className="text-xs text-teal-700 dark:text-teal-300">LP</div>
-                <div className="font-medium">₳{lpTotal.toLocaleString(undefined, { maximumFractionDigits: 1 })}</div>
+                <div className="font-medium">
+                  {isPrivate ? '••••••' : `₳${lpTotal.toLocaleString(undefined, { maximumFractionDigits: 1 })}`}
+                </div>
               </div>
             </div>
           </div>
@@ -107,7 +123,9 @@ export function PortfolioSummary() {
             </div>
             <div className="mt-4 text-center">
               <div className="text-sm text-gray-500 dark:text-gray-400">Total Value</div>
-              <div className="text-lg font-bold mt-1">₳{displayTotalADA.toLocaleString(undefined, { maximumFractionDigits: 2 })}</div>
+              <div className="text-lg font-bold mt-1">
+                {isPrivate ? '••••••' : `₳${displayTotalADA.toLocaleString(undefined, { maximumFractionDigits: 2 })}`}
+              </div>
             </div>
           </div>
         </div>

@@ -1,6 +1,7 @@
 'use client';
 
 import { Token } from '@/app/types';
+import { usePrivacy } from '@/app/contexts/PrivacyContext';
 
 interface TokenTableProps {
   tokens: Token[];
@@ -28,6 +29,8 @@ function PriceChange({ change }: { change: number }) {
 }
 
 export function TokenTable({ tokens, title }: TokenTableProps) {
+  const { isPrivate } = usePrivacy();
+
   // Handle empty token array case
   if (!tokens || tokens.length === 0) {
     return (
@@ -39,16 +42,16 @@ export function TokenTable({ tokens, title }: TokenTableProps) {
 
   // Different table layouts for different token types
   if (title === "LP Tokens" && tokens.some(token => token.token_a !== undefined)) {
-    return renderLpTokensTable(tokens);
+    return renderLpTokensTable(tokens, isPrivate);
   } else if (title === "NFTs") {
-    return renderNftTokensTable(tokens);
+    return renderNftTokensTable(tokens, isPrivate);
   } else {
     // Default to fungible tokens table
-    return renderFungibleTokensTable(tokens);
+    return renderFungibleTokensTable(tokens, isPrivate);
   }
 }
 
-function renderFungibleTokensTable(tokens: Token[]) {
+function renderFungibleTokensTable(tokens: Token[], isPrivate: boolean) {
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
@@ -85,13 +88,13 @@ function renderFungibleTokensTable(tokens: Token[]) {
                 <div className="font-medium text-gray-900 dark:text-white">{token.token_name}</div>
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-gray-500 dark:text-gray-400">
-                {token.amount.toLocaleString()}
+                {isPrivate ? '••••••' : token.amount.toLocaleString()}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-gray-500 dark:text-gray-400">
                 ₳{token.price.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 6 })}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-gray-500 dark:text-gray-400">
-                ₳{(token.amount * token.price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                {isPrivate ? '••••••' : `₳${(token.amount * token.price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
               </td>
               <td className="px-6 py-4 whitespace-nowrap">
                 <PriceChange change={token.change_1d} />
@@ -110,7 +113,7 @@ function renderFungibleTokensTable(tokens: Token[]) {
   );
 }
 
-function renderNftTokensTable(tokens: Token[]) {
+function renderNftTokensTable(tokens: Token[], isPrivate: boolean) {
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
@@ -158,13 +161,13 @@ function renderNftTokensTable(tokens: Token[]) {
                 )}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-gray-500 dark:text-gray-400">
-                {token.amount.toLocaleString()}
+                {isPrivate ? '••••••' : token.amount.toLocaleString()}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-gray-500 dark:text-gray-400">
                 ₳{(token.floor_price || token.price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-gray-500 dark:text-gray-400">
-                ₳{(token.amount * (token.floor_price || token.price)).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                {isPrivate ? '••••••' : `₳${(token.amount * (token.floor_price || token.price)).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
               </td>
               {tokens.some(token => token.change_1d !== undefined || token.change_1d !== 0) && (
                 <td className="px-6 py-4 whitespace-nowrap">
@@ -189,7 +192,7 @@ function renderNftTokensTable(tokens: Token[]) {
   );
 }
 
-function renderLpTokensTable(tokens: Token[]) {
+function renderLpTokensTable(tokens: Token[], isPrivate: boolean) {
   return (
     <div className="overflow-x-auto">
       <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
@@ -226,22 +229,22 @@ function renderLpTokensTable(tokens: Token[]) {
                 <div className="font-medium text-gray-900 dark:text-white">{token.token_name}</div>
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-gray-500 dark:text-gray-400">
-                {token.amount.toLocaleString(undefined, { maximumFractionDigits: 2 })}
+                {isPrivate ? '••••••' : token.amount.toLocaleString(undefined, { maximumFractionDigits: 2 })}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-gray-500 dark:text-gray-400">
                 {token.token_a || 'Unknown'}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-gray-500 dark:text-gray-400">
-                {token.token_a_amount ? token.token_a_amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 'N/A'}
+                {isPrivate ? '••••••' : (token.token_a_amount ? token.token_a_amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 'N/A')}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-gray-500 dark:text-gray-400">
                 {token.token_b || 'Unknown'}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-gray-500 dark:text-gray-400">
-                {token.token_b_amount ? token.token_b_amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 'N/A'}
+                {isPrivate ? '••••••' : (token.token_b_amount ? token.token_b_amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : 'N/A')}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-gray-500 dark:text-gray-400">
-                ₳{(token.amount * token.price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                {isPrivate ? '••••••' : `₳${(token.amount * token.price).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`}
               </td>
             </tr>
           ))}

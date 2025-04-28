@@ -7,6 +7,7 @@ import { PortfolioSummary } from '@/app/components/portfolio/PortfolioSummary';
 import { TokenTable } from '@/app/components/portfolio/TokenTable';
 import { Tabs } from '@/app/components/ui/Tabs';
 import { Card } from '@/app/components/ui/Card';
+import { PrivacyProvider } from '@/app/contexts/PrivacyContext';
 
 // Loading component
 function PortfolioLoading() {
@@ -24,6 +25,10 @@ export function PortfolioContent() {
   const { portfolioData, isLoading, error, refreshData } = usePortfolio();
   const { isConnected, connectWallet } = useWallet();
 
+  const handleConnectWallet = () => {
+    connectWallet();
+  };
+
   console.log("PORTFOLIO DATA: ", portfolioData)
 
   if (!isConnected) {
@@ -33,7 +38,7 @@ export function PortfolioContent() {
         <p className="text-gray-600 dark:text-gray-400 mb-6 max-w-md mx-auto">
           Connect your Cardano wallet to view your portfolio, track your tokens, and get personalized trade recommendations.
         </p>
-        <Button onClick={connectWallet} variant="primary" size="lg">
+        <Button onClick={handleConnectWallet} variant="primary" size="lg">
           Connect Wallet
         </Button>
       </div>
@@ -73,24 +78,26 @@ export function PortfolioContent() {
   ];
 
   return (
-    <div>
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Your Portfolio</h1>
-        <Button onClick={refreshData} variant="outline" size="sm">
-          Refresh
-        </Button>
-      </div>
+    <PrivacyProvider>
+      <div>
+        <div className="flex justify-between items-center mb-6">
+          <h1 className="text-2xl font-bold">Your Portfolio</h1>
+          <Button onClick={refreshData} variant="outline" size="sm">
+            Refresh
+          </Button>
+        </div>
 
-      <PortfolioSummary />
+        <PortfolioSummary />
 
-      {/* Token Tables in Tabs */}
-      <div className="mt-6">
-        <Card>
-          <div className="px-6 py-4">
-            <Tabs tabs={portfolioTabs} />
-          </div>
-        </Card>
+        {/* Token Tables in Tabs */}
+        <div className="mt-6">
+          <Card>
+            <div className="px-6 py-4">
+              <Tabs tabs={portfolioTabs} />
+            </div>
+          </Card>
+        </div>
       </div>
-    </div>
+    </PrivacyProvider>
   );
 } 
