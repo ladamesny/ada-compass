@@ -7,7 +7,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { usePrivacy } from '@/app/contexts/PrivacyContext';
 import { PrivacyToggle } from '@/app/components/ui/PrivacyToggle';
 
-// Register Chart.js components
+// Register Chart.js component
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export function PortfolioSummary() {
