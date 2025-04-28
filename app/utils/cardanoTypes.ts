@@ -38,6 +38,6 @@ export interface CardanoAPI {
 // Extend the global Window interface
 declare global {
   interface Window {
-    cardano?: CardanoAPI;
+    cardano: CardanoAPI | undefined;
   }
 } 
