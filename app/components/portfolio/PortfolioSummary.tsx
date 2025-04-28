@@ -70,9 +70,6 @@ export function PortfolioSummary() {
   return (
     <Card>
       <CardContent>
-        <div className="flex justify-end mb-4">
-          <PrivacyToggle />
-        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Total Balance */}
           <div className="order-2 md:order-1">

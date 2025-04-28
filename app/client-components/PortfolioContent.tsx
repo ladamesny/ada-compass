@@ -7,7 +7,8 @@ import { PortfolioSummary } from '@/app/components/portfolio/PortfolioSummary';
 import { TokenTable } from '@/app/components/portfolio/TokenTable';
 import { Tabs } from '@/app/components/ui/Tabs';
 import { Card } from '@/app/components/ui/Card';
-import { PrivacyProvider } from '@/app/contexts/PrivacyContext';
+import { PrivacyProvider, usePrivacy } from '@/app/contexts/PrivacyContext';
+import { PrivacyToggle } from '@/app/components/ui/PrivacyToggle';
 
 // Loading component
 function PortfolioLoading() {
@@ -16,6 +17,28 @@ function PortfolioLoading() {
       <div className="h-64 bg-gray-200 dark:bg-gray-800 rounded-lg"></div>
       <div className="h-64 bg-gray-200 dark:bg-gray-800 rounded-lg"></div>
       <div className="h-64 bg-gray-200 dark:bg-gray-800 rounded-lg"></div>
+    </div>
+  );
+}
+
+// Portfolio Header component
+function PortfolioHeader({ onRefresh }: { onRefresh: () => void }) {
+  const { isPrivate } = usePrivacy();
+  
+  return (
+    <div className="flex justify-between items-center mb-6">
+      <div className="flex items-center gap-4">
+        <h1 className="text-2xl font-bold">Your Portfolio</h1>
+        <div className="flex items-center gap-2">
+          <PrivacyToggle />
+          <span className="text-sm text-gray-500 dark:text-gray-400">
+            {isPrivate ? 'Click to show balances' : 'Click to hide balances'}
+          </span>
+        </div>
+      </div>
+      <Button onClick={onRefresh} variant="outline" size="sm">
+        Refresh
+      </Button>
     </div>
   );
 }
@@ -80,13 +103,7 @@ export function PortfolioContent() {
   return (
     <PrivacyProvider>
       <div>
-        <div className="flex justify-between items-center mb-6">
-          <h1 className="text-2xl font-bold">Your Portfolio</h1>
-          <Button onClick={refreshData} variant="outline" size="sm">
-            Refresh
-          </Button>
-        </div>
-
+        <PortfolioHeader onRefresh={refreshData} />
         <PortfolioSummary />
 
         {/* Token Tables in Tabs */}
