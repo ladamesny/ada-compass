@@ -29,6 +29,7 @@ export interface PortfolioData {
 export interface CoinGeckoPrice {
   [key: string]: {
     usd: number;
+    usd_24h_change?: number;
   };
 }
 

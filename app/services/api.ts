@@ -140,7 +140,7 @@ export async function searchTokens(query: string): Promise<WatchlistToken[]> {
 export async function getCryptoPrices(): Promise<CoinGeckoPrice> {
   try {
     // Construct request URL with API key if available
-    let url = `${COINGECKO_API_URL}/simple/price?ids=bitcoin,cardano&vs_currencies=usd`;
+    let url = `${COINGECKO_API_URL}/simple/price?ids=bitcoin,cardano&vs_currencies=usd&include_24hr_change=true`;
     if (COINGECKO_CONFIG.API_KEY) {
       url += `&x_cg_pro_api_key=${COINGECKO_CONFIG.API_KEY}`;
     }
@@ -151,8 +151,8 @@ export async function getCryptoPrices(): Promise<CoinGeckoPrice> {
     console.error('Error fetching crypto prices:', error);
     // Return mock data if API fails
     return {
-      bitcoin: { usd: 95000 },
-      cardano: { usd: 0.72 }
+      bitcoin: { usd: 95000, usd_24h_change: 2.5 },
+      cardano: { usd: 0.72, usd_24h_change: -1.2 }
     };
   }
 }
