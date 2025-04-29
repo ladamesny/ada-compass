@@ -6,6 +6,7 @@ import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { usePrivacy } from '@/app/contexts/PrivacyContext';
 import { PrivacyToggle } from '@/app/components/ui/PrivacyToggle';
+import { Popover } from '@/app/components/ui/Popover';
 
 // Register Chart.js component
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -75,40 +76,50 @@ export function PortfolioSummary() {
           <div className="order-2 md:order-1 flex flex-col items-center">
             <h3 className="text-lg font-semibold mb-4 text-center">Total Balance</h3>
             <div className="grid grid-cols-2 gap-2 text-center w-1/2">
-              <div className="p-2 rounded bg-purple-100 dark:bg-purple-900">
-                <div className="text-xs text-purple-700 dark:text-purple-300">ADA</div>
-                <div className="font-medium">
-                  {isPrivate ? '••••••' : `₳${displayTotalADA.toLocaleString(undefined, { maximumFractionDigits: 2 })}`}
+              <Popover content="The total value of your portfolio in ADA (₳)">
+                <div className="p-2 rounded bg-purple-100 dark:bg-purple-900">
+                  <div className="text-xs text-purple-700 dark:text-purple-300">ADA</div>
+                  <div className="font-medium">
+                    {isPrivate ? '••••••' : `₳${displayTotalADA.toLocaleString(undefined, { maximumFractionDigits: 2 })}`}
+                  </div>
                 </div>
-              </div>
-              <div className="p-2 rounded bg-indigo-100 dark:bg-indigo-900">
-                <div className="text-xs text-indigo-700 dark:text-indigo-300">USD</div>
-                <div className="font-medium">
-                  {isPrivate ? '••••••' : `$${totalBalanceUSD.toLocaleString(undefined, { maximumFractionDigits: 2 })}`}
+              </Popover>
+              <Popover content="The total value of your portfolio in USD ($)">
+                <div className="p-2 rounded bg-indigo-100 dark:bg-indigo-900">
+                  <div className="text-xs text-indigo-700 dark:text-indigo-300">USD</div>
+                  <div className="font-medium">
+                    {isPrivate ? '••••••' : `$${totalBalanceUSD.toLocaleString(undefined, { maximumFractionDigits: 2 })}`}
+                  </div>
                 </div>
-              </div>
+              </Popover>
             </div>
             
             {/* Token Type Breakdown */}
             <div className="mt-4 grid grid-cols-1 gap-2 text-center w-1/2">
-              <div className="p-2 rounded bg-blue-100 dark:bg-blue-900">
-                <div className="text-xs text-blue-700 dark:text-blue-300">CNTs</div>
-                <div className="font-medium">
-                  {isPrivate ? '••••••' : `₳${fungibleTotal.toLocaleString(undefined, { maximumFractionDigits: 1 })}`}
+              <Popover content="The total value of your Cardano Native Tokens (CNTs) in ADA">
+                <div className="p-2 rounded bg-blue-100 dark:bg-blue-900">
+                  <div className="text-xs text-blue-700 dark:text-blue-300">CNTs</div>
+                  <div className="font-medium">
+                    {isPrivate ? '••••••' : `₳${fungibleTotal.toLocaleString(undefined, { maximumFractionDigits: 1 })}`}
+                  </div>
                 </div>
-              </div>
-              <div className="p-2 rounded bg-pink-100 dark:bg-pink-900">
-                <div className="text-xs text-pink-700 dark:text-pink-300">NFTs</div>
-                <div className="font-medium">
-                  {isPrivate ? '••••••' : `₳${nftTotal.toLocaleString(undefined, { maximumFractionDigits: 1 })}`}
+              </Popover>
+              <Popover content="The total value of your Non-Fungible Tokens (NFTs) in ADA">
+                <div className="p-2 rounded bg-pink-100 dark:bg-pink-900">
+                  <div className="text-xs text-pink-700 dark:text-pink-300">NFTs</div>
+                  <div className="font-medium">
+                    {isPrivate ? '••••••' : `₳${nftTotal.toLocaleString(undefined, { maximumFractionDigits: 1 })}`}
+                  </div>
                 </div>
-              </div>
-              <div className="p-2 rounded bg-teal-100 dark:bg-teal-900">
-                <div className="text-xs text-teal-700 dark:text-teal-300">LPTs</div>
-                <div className="font-medium">
-                  {isPrivate ? '••••••' : `₳${lpTotal.toLocaleString(undefined, { maximumFractionDigits: 1 })}`}
+              </Popover>
+              <Popover content="The total value of your Liquidity Pool Tokens (LPTs) in ADA">
+                <div className="p-2 rounded bg-teal-100 dark:bg-teal-900">
+                  <div className="text-xs text-teal-700 dark:text-teal-300">LPTs</div>
+                  <div className="font-medium">
+                    {isPrivate ? '••••••' : `₳${lpTotal.toLocaleString(undefined, { maximumFractionDigits: 1 })}`}
+                  </div>
                 </div>
-              </div>
+              </Popover>
             </div>
           </div>
           
