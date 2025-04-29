@@ -87,16 +87,16 @@ export function PortfolioContent() {
   // Portfolio tabs configuration
   const portfolioTabs = [
     {
-      label: `Fungible Tokens (${portfolioData.fungible_tokens.length})`,
-      content: <TokenTable tokens={portfolioData.fungible_tokens} title="Fungible Tokens" />
+      label: `CNTs (${portfolioData.fungible_tokens.length})`,
+      content: <TokenTable tokens={portfolioData.fungible_tokens} title="CNTs" />
     },
     {
       label: `NFTs (${portfolioData.nfts.length})`,
       content: <TokenTable tokens={portfolioData.nfts} title="NFTs" />
     },
     {
-      label: `LP Tokens (${portfolioData.lp_tokens.length})`,
-      content: <TokenTable tokens={portfolioData.lp_tokens} title="LP Tokens" />
+      label: `LPTs (${portfolioData.lp_tokens.length})`,
+      content: <TokenTable tokens={portfolioData.lp_tokens} title="LPTs" />
     }
   ];
 

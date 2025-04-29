@@ -24,7 +24,7 @@ export function PortfolioSummary() {
 
   // Chart data
   const chartData = {
-    labels: ['Fungible Tokens', 'NFTs', 'LP Tokens'],
+    labels: ['CNTs', 'NFTs', 'LPTs'],
     datasets: [
       {
         data: [fungibleTotal, nftTotal, lpTotal],
@@ -72,27 +72,27 @@ export function PortfolioSummary() {
       <CardContent>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Total Balance */}
-          <div className="order-2 md:order-1">
-            <h3 className="text-lg font-semibold mb-4">Total Balance</h3>
-            <div className="grid grid-cols-2 gap-4">
-              <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
-                <div className="text-sm text-gray-500 dark:text-gray-400">ADA</div>
-                <div className="text-lg font-bold mt-1">
+          <div className="order-2 md:order-1 flex flex-col items-center">
+            <h3 className="text-lg font-semibold mb-4 text-center">Total Balance</h3>
+            <div className="grid grid-cols-2 gap-2 text-center w-1/2">
+              <div className="p-2 rounded bg-purple-100 dark:bg-purple-900">
+                <div className="text-xs text-purple-700 dark:text-purple-300">ADA</div>
+                <div className="font-medium">
                   {isPrivate ? '••••••' : `₳${displayTotalADA.toLocaleString(undefined, { maximumFractionDigits: 2 })}`}
                 </div>
               </div>
-              <div className="p-4 bg-gray-100 dark:bg-gray-800 rounded-lg">
-                <div className="text-sm text-gray-500 dark:text-gray-400">USD</div>
-                <div className="text-lg font-bold mt-1">
+              <div className="p-2 rounded bg-indigo-100 dark:bg-indigo-900">
+                <div className="text-xs text-indigo-700 dark:text-indigo-300">USD</div>
+                <div className="font-medium">
                   {isPrivate ? '••••••' : `$${totalBalanceUSD.toLocaleString(undefined, { maximumFractionDigits: 2 })}`}
                 </div>
               </div>
             </div>
             
             {/* Token Type Breakdown */}
-            <div className="mt-4 grid grid-cols-3 gap-2 text-center">
+            <div className="mt-4 grid grid-cols-1 gap-2 text-center w-1/2">
               <div className="p-2 rounded bg-blue-100 dark:bg-blue-900">
-                <div className="text-xs text-blue-700 dark:text-blue-300">Fungible</div>
+                <div className="text-xs text-blue-700 dark:text-blue-300">CNTs</div>
                 <div className="font-medium">
                   {isPrivate ? '••••••' : `₳${fungibleTotal.toLocaleString(undefined, { maximumFractionDigits: 1 })}`}
                 </div>
@@ -104,7 +104,7 @@ export function PortfolioSummary() {
                 </div>
               </div>
               <div className="p-2 rounded bg-teal-100 dark:bg-teal-900">
-                <div className="text-xs text-teal-700 dark:text-teal-300">LP</div>
+                <div className="text-xs text-teal-700 dark:text-teal-300">LPTs</div>
                 <div className="font-medium">
                   {isPrivate ? '••••••' : `₳${lpTotal.toLocaleString(undefined, { maximumFractionDigits: 1 })}`}
                 </div>
