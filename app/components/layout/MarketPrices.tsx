@@ -1,11 +1,11 @@
 'use client';
 
-import { usePortfolio } from '@/app/hooks/usePortfolio';
 import { useWallet } from '@/app/hooks/useWallet';
+import { useCryptoPrices } from '@/app/hooks/useCryptoPrices';
 
 export function MarketPrices() {
-  const { cryptoPrices } = usePortfolio();
   const { isConnected } = useWallet();
+  const { prices: cryptoPrices, isLoading } = useCryptoPrices();
 
   if (!isConnected) return null;
 
