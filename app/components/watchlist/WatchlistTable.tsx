@@ -30,7 +30,7 @@ export function WatchlistTable() {
       </CardHeader>
       <CardContent>
         <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+          <table data-testid="watchlist-table" className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
             <thead className="bg-gray-50 dark:bg-gray-700">
               <tr>
                 <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
@@ -61,7 +61,7 @@ export function WatchlistTable() {
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-gray-500 dark:text-gray-400">
                     {token.market_cap 
-                      ? `₳${(token.market_cap).toLocaleString()}`
+                      ? `₳${(token.market_cap).toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
                       : 'N/A'
                     }
                   </td>
